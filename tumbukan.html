@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width: 100%, initial-scale=1.0" />
+    <title>Simulasi Tumbukan</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+        background-color: #ffffff;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      .container {
+        position: relative;
+        width: 400px;
+        height: 200px;
+        margin-top: 20px;
+        background: #f9f9f9;
+        border: 2px solid #ccc;
+        border-radius: 10px;
+        overflow: hidden;
+      }
+      .ball {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color: orange;
+      }
+      .ball2 {
+        background-color: blue;
+      }
+      .btn-group {
+        margin-top: 20px;
+      }
+      button {
+        padding: 10px 20px;
+        margin: 5px;
+        border: none;
+        background-color: #3498db;
+        color: white;
+        cursor: pointer;
+        border-radius: 5px;
+        font-size: 16px;
+      }
+      button:hover {
+        background-color: #2980b9;
+      }
+      .question {
+        display: none;
+        text-align: left;
+        margin-top: 20px;
+        padding: 20px;
+        background-color: #f0f0f0;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+      }
+      .active {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Simulasi Tumbukan</h1>
+    <p>Klik salah satu tombol untuk memulai simulasi dan menampilkan soal.</p>
+    <div class="btn-group">
+      <button onclick="startSimulation('perfect')">Tumbukan Lenting Sempurna</button>
+      <button onclick="startSimulation('partial')">Tumbukan Sebagian Lenting</button>
+      <button onclick="startSimulation('inelastic')">Tidak Lenting Sama Sekali</button>
+    </div>
+
+    <div class="container">
+      <div class="ball" id="ball1" style="left: 50px; top: 85px"></div>
+      <div class="ball ball2" id="ball2" style="left: 300px; top: 85px"></div>
+    </div>
+
+    <div id="perfect-question" class="question" style="width: 50%">
+      <h3>Soal: Tumbukan Lenting Sempurna</h3>
+      <p>
+        Soal:<br />
+        Sebuah bola oranye (massa 0.1 kg, kecepatan 10 m/s) bertumbukan dengan bola biru (massa 0.2 kg, diam).<br />
+        Berapa kecepatan kedua bola setelah tumbukan?<br /><br />
+
+        Cara:<br />
+        Dalam tumbukan lenting sempurna, kedua bola saling bertukar kecepatan sesuai dengan hukum kekekalan momentum dan energi kinetik.<br />
+        Rumus untuk kecepatan setelah tumbukan:<br /><br />
+
+        Kecepatan bola 1 setelah tumbukan:<br />
+        𝑣₁′ = (𝑚₁ − 𝑚₂) ⋅ 𝑣₁ + 2 ⋅ 𝑚₂ ⋅ 𝑣₂<br />
+        𝑣₁′ = (𝑚₁ + 𝑚₂) / (𝑚₁ + 𝑚₂) ⋅ (𝑚₁ − 𝑚₂) ⋅ 𝑣₁ + 2 ⋅ 𝑚₂ ⋅ 𝑣₂<br /><br />
+
+        Kecepatan bola 2 setelah tumbukan:<br />
+        𝑣₂′ = (𝑚₂ − 𝑚₁) ⋅ 𝑣₂ + 2 ⋅ 𝑚₁ ⋅ 𝑣₁<br />
+        𝑣₂′ = (𝑚₁ + 𝑚₂) / (𝑚₁ + 𝑚₂) ⋅ (𝑚₂ − 𝑚₁) ⋅ 𝑣₂ + 2 ⋅ 𝑚₁ ⋅ 𝑣₁<br /><br />
+
+        Dengan nilai:<br />
+        𝑚₁ = 0.1 kg, 𝑚₂ = 0.2 kg, 𝑣₁ = 10 m/s, 𝑣₂ = 0 m/s<br /><br />
+
+        Setelah perhitungan:<br />
+        Kecepatan bola oranye setelah tumbukan: 0 m/s<br />
+        Kecepatan bola biru setelah tumbukan: 10 m/s
+      </p>
+    </div>
+    <div id="partial-question" class="question" style="width: 50%">
+      <h3>Soal: Tumbukan Sebagian Lenting</h3>
+      <p>
+        Soal:<br />
+        Sebuah bola oranye (massa 0.1 kg, kecepatan 8 m/s) bertumbukan dengan bola biru (massa 0.2 kg, kecepatan -2 m/s). Koefisien restitusi adalah 0.6.<br />
+        Berapa kecepatan kedua bola setelah tumbukan?<br /><br />
+
+        Cara:<br />
+        Pada tumbukan sebagian lenting, kita menggunakan koefisien restitusi 𝑒 untuk menghitung kecepatan setelah tumbukan.<br />
+        Rumus untuk koefisien restitusi adalah:<br />
+        𝑒 = (𝑣₂′ − 𝑣₁′) / (𝑣₁ − 𝑣₂)<br />
+        Kemudian, kita dapat menghitung kecepatan bola setelah tumbukan menggunakan rumus momentum:<br /><br />
+
+        Kecepatan bola 1 setelah tumbukan:<br />
+        𝑣₁′ = (𝑚₁ − 𝑒 ⋅ 𝑚₂) ⋅ 𝑣₁ + (1 + 𝑒) ⋅ 𝑚₂ ⋅ 𝑣₂ / (𝑚₁ + 𝑚₂)<br /><br />
+
+        Kecepatan bola 2 setelah tumbukan:<br />
+        𝑣₂′ = (𝑚₂ − 𝑒 ⋅ 𝑚₁) ⋅ 𝑣₂ + (1 + 𝑒) ⋅ 𝑚₁ ⋅ 𝑣₁ / (𝑚₁ + 𝑚₂)<br /><br />
+
+        Dengan nilai:<br />
+        𝑚₁ = 0.1 kg, 𝑚₂ = 0.2 kg, 𝑣₁ = 8 m/s, 𝑣₂ = -2 m/s, 𝑒 = 0.6<br /><br />
+
+        Setelah perhitungan:<br />
+        Kecepatan bola oranye setelah tumbukan: 3.6 m/s<br />
+        Kecepatan bola biru setelah tumbukan: 5.4 m/s
+      </p>
+    </div>
+    <div id="inelastic-question" class="question" style="width: 50%">
+      <h3>Soal: Tumbukan Tidak Lenting Sama Sekali</h3>
+      <p>
+        Soal:<br />
+        Sebuah bola oranye (massa 0.1 kg, kecepatan 6 m/s) bertumbukan dengan bola biru (massa 0.2 kg, kecepatan -3 m/s). Setelah tumbukan, kedua bola menempel menjadi satu.<br />
+        Berapa kecepatan akhir kedua bola?<br /><br />
+
+        Cara:<br />
+        Dalam tumbukan tidak lenting sama sekali, kedua bola menempel menjadi satu setelah tumbukan. Oleh karena itu, kita menggunakan prinsip kekekalan momentum untuk menghitung kecepatan akhirnya.<br />
+        Rumus kekekalan momentum:<br />
+        𝑚₁ ⋅ 𝑣₁ + 𝑚₂ ⋅ 𝑣₂ = (𝑚₁ + 𝑚₂) ⋅ 𝑣ᶠ<br /><br />
+
+        Dengan nilai:<br />
+        𝑚₁ = 0.1 kg, 𝑚₂ = 0.2 kg, 𝑣₁ = 6 m/s, 𝑣₂ = -3 m/s<br /><br />
+
+        Setelah perhitungan:<br />
+        Kecepatan akhir kedua bola setelah tumbukan: 0.6 m/s
+      </p>
+    </div>
+
+    <script>
+      const ball1 = document.getElementById("ball1");
+      const ball2 = document.getElementById("ball2");
+      let animationId;
+
+      function startSimulation(type) {
+        cancelAnimationFrame(animationId);
+
+        // Reset positions
+        let x1 = 50;
+        let x2 = 300;
+        let v1 = type === "perfect" ? 5 : 8; // Initial velocity for ball1
+        let v2 = type === "perfect" ? 0 : -3; // Initial velocity for ball2
+        const m1 = 0.1; // Mass of ball1
+        const m2 = 0.2; // Mass of ball2
+        const e = type === "partial" ? 0.6 : type === "perfect" ? 1 : 0; // Coefficient of restitution
+
+        function animate() {
+          x1 += v1;
+          x2 += v2;
+
+          // Check for collision
+          if (x2 - x1 <= 30) {
+            const v1Final = ((m1 - e * m2) * v1 + (1 + e) * m2 * v2) / (m1 + m2);
+            const v2Final = ((m2 - e * m1) * v2 + (1 + e) * m1 * v1) / (m1 + m2);
+
+            v1 = v1Final;
+            v2 = v2Final;
+          }
+
+          // Check boundary conditions (container width: 400px)
+          if (x1 < 0) {
+            x1 = 0; // Prevent ball1 from going left of container
+          } else if (x1 > 370) {
+            // 400px (container width) - 30px (ball width)
+            x1 = 370;
+          }
+
+          if (x2 < 0) {
+            x2 = 0; // Prevent ball2 from going left of container
+          } else if (x2 > 370) {
+            x2 = 370;
+          }
+
+          // Update positions
+          ball1.style.left = x1 + "px";
+          ball2.style.left = x2 + "px";
+
+          if (x1 < 370 && x2 > 0) {
+            // Stop if balls are within bounds
+            animationId = requestAnimationFrame(animate);
+          }
+        }
+
+        animationId = requestAnimationFrame(animate);
+
+        // Show the appropriate question
+        document.querySelectorAll(".question").forEach((el) => el.classList.remove("active"));
+        document.getElementById(`${type}-question`).classList.add("active");
+      }
+    </script>
+  </body>
+</html>
